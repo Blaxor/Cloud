@@ -32,7 +32,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.16</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>
@@ -40,10 +39,9 @@
             <version>3.6.0</version>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.28</version>
         </dependency>
     </dependencies>
 

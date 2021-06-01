@@ -1,3 +1,5 @@
+import ro.deiutzblaxo.cloud.data.redis.RedisConnection;
+
 import java.io.*;
 
 public class apptest {
@@ -29,6 +31,8 @@ public class apptest {
 
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        printSpiral(5);
+        RedisConnection con = new RedisConnection("192.168.1.132",6379,"","clouddev");
+        System.out.println(con.jedisPool.getResource().set("test","a"));
+
     }
 }

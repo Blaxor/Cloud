@@ -1,6 +1,14 @@
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLManager.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageRedis.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageYaml.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageMySQL.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Pair.java
 D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\ToManyArgs.java
 D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\redis\RedisConnection.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\NoFoundException.java
 D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLConnection.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\Geometry.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NusType.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\CloudLogger.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLManager.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDManager.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDStorage.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Triplet.java
+D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\NoFoundException.java

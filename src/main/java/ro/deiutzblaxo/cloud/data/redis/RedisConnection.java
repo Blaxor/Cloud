@@ -1,6 +1,7 @@
 package ro.deiutzblaxo.cloud.data.redis;
 
 import lombok.Getter;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -28,10 +29,28 @@ public class RedisConnection {
     public void connect(String hostname, int port, String user, String password) {
         if (password == null || password == "")
             jedisPool = new JedisPool(poolConfig, hostname, port);
+        else if (user == null || user == "")
+            jedisPool = new JedisPool(poolConfig, hostname, port, 1000, password);
         else
             jedisPool = new JedisPool(poolConfig, hostname, port, user, password);
     }
 
+    public void set(String key, String value) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.set(key, value);
+
+        }
+    }
+
+    public String get(String key) {
+        String value;
+        try (Jedis jedis = jedisPool.getResource()) {
+            value = jedis.get(key);
+
+        }
+
+        return value == "nil" ? null : value;
+    }
 
 
     private JedisPoolConfig buildPoolConfig() {

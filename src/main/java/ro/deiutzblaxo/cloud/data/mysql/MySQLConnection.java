@@ -1,12 +1,12 @@
 package ro.deiutzblaxo.cloud.data.mysql;
 
 import lombok.Getter;
+import ro.deiutzblaxo.cloud.utils.CloudLogger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Getter
 public class MySQLConnection {
@@ -39,19 +39,17 @@ public class MySQLConnection {
 
         try {
             if (connection != null && !(this.connection.isClosed())) {
-                getLogger().log(Level.WARNING, "A connection is already existing. This may produce errors");
+                CloudLogger.getLogger().log(Level.WARNING, "A connection is already existing. This may produce errors");
             }
             this.connection = DriverManager.getConnection(DEFAULT_PREFIX + host + ":" + port + "/" + database + (params == "" ? "" : "?" + params), username, password);
-            getLogger().log(Level.INFO, "Connected with success at database " + database + " with user: " + username + " and password " + password);
+            CloudLogger.getLogger().log(Level.INFO, "Connected with success at database " + database + " with user: " + username + " and password " + password);
         } catch (SQLException throwables) {
-            getLogger().log(Level.INFO, "Failed connecting at database " + database + " with user: " + username + " and password " + password);
+            CloudLogger.getLogger().log(Level.INFO, "Failed connecting at database " + database + " with user: " + username + " and password " + password);
             throwables.printStackTrace();
         }
     }
 
-    public Logger getLogger() {
-        return Logger.getLogger("Cloud");
-    }
+
 
 
 }
