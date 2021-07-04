@@ -17,7 +17,7 @@ public class NameUUIDStorageRedis implements NameUUIDStorage {
 
     public NameUUIDStorageRedis(RedisConnection redisConnection, String tablePrefix) {
         this.redisConnection = redisConnection;
-        table = tablePrefix + "_NameUUIDStorage";
+        table = tablePrefix + "NameUUIDStorage";
 
     }
 
@@ -28,6 +28,11 @@ public class NameUUIDStorageRedis implements NameUUIDStorage {
         return value == null ? null : value;
 
 
+    }
+
+    @Override
+    public String getRealName(String fakename) {
+        return null;
     }
 
     public String getNameByUUID(UUID uuid) {

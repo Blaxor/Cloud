@@ -43,13 +43,25 @@ public class RedisConnection {
     }
 
     public String get(String key) {
+        if (!exist(key))
+            return null;
         String value;
         try (Jedis jedis = jedisPool.getResource()) {
             value = jedis.get(key);
-
         }
-
         return value == "nil" ? null : value;
+    }
+
+    public void delete(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            jedis.del(key);
+        }
+    }
+
+    public boolean exist(String key) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.exists(key);
+        }
     }
 
 

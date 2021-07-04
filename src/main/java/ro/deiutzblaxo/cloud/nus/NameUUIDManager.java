@@ -1,6 +1,8 @@
 package ro.deiutzblaxo.cloud.nus;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.utils.objects.Pair;
 
@@ -9,6 +11,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class NameUUIDManager {
+    @Getter
+    @Setter
     private ArrayList<NameUUIDStorage> storages = new ArrayList<>();
     private ConcurrentLinkedQueue<Pair<UUID, String>> q = new ConcurrentLinkedQueue<>();
 
@@ -52,6 +56,16 @@ public class NameUUIDManager {
             throw new NoFoundException("UUID not found by name: " + name);
         add(name, UUID.fromString(value));
         return UUID.fromString(value);
+    }
+
+    public String getRealName(String name) {
+        String value;
+        for (NameUUIDStorage storage : storages) {
+            value = storage.getUUIDByName(name);
+            if (value != null)
+                return value;
+        }
+        return null;
     }
 
     public void add(String name, UUID uuid) {

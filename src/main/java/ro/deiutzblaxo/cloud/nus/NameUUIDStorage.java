@@ -8,5 +8,7 @@ public interface NameUUIDStorage {
 
     String getUUIDByName(String name);
 
+    String getRealName(String fakename);
+
     void add(String name, UUID uuid);
 }

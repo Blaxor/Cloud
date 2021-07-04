@@ -85,6 +85,11 @@ public class NameUUIDStorageYaml implements NameUUIDStorage {
         return cache.get(name);
     }
 
+    @Override
+    public String getRealName(String fakename) {
+        return null;
+    }
+
     public void add(String name, UUID uuid) {
         getCache().put(name, uuid.toString());
         getCache().put(uuid.toString(), name);

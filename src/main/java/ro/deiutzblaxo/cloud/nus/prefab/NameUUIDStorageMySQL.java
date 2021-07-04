@@ -27,6 +27,7 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
 
     public NameUUIDStorageMySQL(MySQLManager manager, String tablePrefix) {
         mySQLManager = manager;
+        this.table = tablePrefix + "_NameUUIDStorage";
         createTable();
     }
 
@@ -34,9 +35,9 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
         switch (type) {
             case NAME:
                 String name = value.toLowerCase(Locale.ROOT);
-                return mySQLManager.exists(table, "name", name);
+                return mySQLManager.exists(table, "NAME", name);
             case UUID:
-                return mySQLManager.exists(table, "uuid", value);
+                return mySQLManager.exists(table, "UUID", value);
             default:
                 return false;
         }
@@ -44,7 +45,7 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
     }
 
     public void createTable() {
-        mySQLManager.createTable(table, new String[]{"name varchar(255)", "uuid varchar(255)"});
+        mySQLManager.createTable(table, new String[]{"NAME varchar(255)", "UUID varchar(255)"});
     }
 
 
@@ -52,17 +53,26 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
         name = name.toLowerCase(Locale.ROOT);
 
         try {
-            return mySQLManager.get(table, "uuid", "name", name, String.class);
+            return mySQLManager.getLikeString(table, "NAME", name, "UUID");
         } catch (NoFoundException e) {
             return null;
         }
 
     }
 
+    @Override
+    public String getRealName(String fakename) {
+        try {
+            return mySQLManager.getLikeString(table, "NAME", fakename, "NAME");
+        } catch (NoFoundException e) {
+            return null;
+        }
+    }
+
     public String getNameByUUID(UUID uuid) {
 
         try {
-            return mySQLManager.get(table, "name", "uuid", uuid.toString(), String.class);
+            return mySQLManager.getLikeString(table, "UUID", uuid.toString(), "NAME");
         } catch (NoFoundException e) {
             return null;
         }
@@ -71,8 +81,8 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
 
     @SneakyThrows
     public void add(String name, UUID uuid) {
-        if (!mySQLManager.exists(table, "uuid", uuid.toString())) {
-            mySQLManager.insert(table, new String[]{"uuid", "name"}, new Object[]{uuid.toString(), name});
+        if (!mySQLManager.exists(table, "UUID", uuid.toString())) {
+            mySQLManager.insert(table, new String[]{"UUID", "NAME"}, new Object[]{uuid.toString(), name});
         }
     }
 }
