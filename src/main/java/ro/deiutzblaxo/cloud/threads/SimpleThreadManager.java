@@ -1,6 +1,5 @@
 package ro.deiutzblaxo.cloud.threads;
 
-import jdk.jfr.internal.LogLevel;
 import ro.deiutzblaxo.cloud.utils.CloudLogger;
 
 import java.util.ArrayList;
