@@ -1,6 +1,5 @@
 package ro.deiutzblaxo.cloud.data.mysql;
 
-import lombok.Getter;
 import ro.deiutzblaxo.cloud.utils.CloudLogger;
 
 import java.sql.Connection;
@@ -8,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-@Getter
+
 public class MySQLConnection {
     private static String DEFAULT_PREFIX = "jdbc:mysql://";
     private Connection connection;
@@ -49,7 +48,7 @@ public class MySQLConnection {
         }
     }
 
-
-
-
+    public Connection getConnection() {
+        return connection;
+    }
 }

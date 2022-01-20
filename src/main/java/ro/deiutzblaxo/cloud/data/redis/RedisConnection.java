@@ -1,6 +1,6 @@
 package ro.deiutzblaxo.cloud.data.redis;
 
-import lombok.Getter;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -10,7 +10,7 @@ import java.time.Duration;
 public class RedisConnection {
 
     final JedisPoolConfig poolConfig = buildPoolConfig();
-    @Getter
+
     public JedisPool jedisPool;
     private String hostname;
     private int port;
@@ -80,5 +80,7 @@ public class RedisConnection {
         return poolConfig;
     }
 
-
+    public JedisPool getJedisPool() {
+        return jedisPool;
+    }
 }

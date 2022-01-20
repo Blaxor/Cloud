@@ -1,7 +1,6 @@
 package ro.deiutzblaxo.cloud.nus.prefab;
 
-import lombok.Data;
-import lombok.NonNull;
+
 import org.yaml.snakeyaml.Yaml;
 import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
 import ro.deiutzblaxo.cloud.nus.PriorityNUS;
@@ -11,7 +10,7 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 
-@Data
+
 public class NameUUIDStorageYaml implements NameUUIDStorage {
 
     private TreeMap<String, String> cache;
@@ -96,7 +95,7 @@ public class NameUUIDStorageYaml implements NameUUIDStorage {
     }
 
     @Override
-    public @NonNull PriorityNUS getPriority() {
+    public  PriorityNUS getPriority() {
         return priority;
     }
 
@@ -105,5 +104,7 @@ public class NameUUIDStorageYaml implements NameUUIDStorage {
         getCache().put(uuid.toString(), name);
     }
 
-
+    public TreeMap<String, String> getCache() {
+        return cache;
+    }
 }

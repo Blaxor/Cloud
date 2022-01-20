@@ -1,9 +1,5 @@
 package ro.deiutzblaxo.cloud.nus.prefab;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.SneakyThrows;
 import ro.deiutzblaxo.cloud.data.redis.RedisConnection;
 import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
 import ro.deiutzblaxo.cloud.nus.PriorityNUS;
@@ -11,7 +7,6 @@ import ro.deiutzblaxo.cloud.nus.PriorityNUS;
 import java.util.Locale;
 import java.util.UUID;
 
-@Getter(AccessLevel.PROTECTED)
 public class NameUUIDStorageRedis implements NameUUIDStorage {
 
     private RedisConnection redisConnection;
@@ -48,7 +43,7 @@ public class NameUUIDStorageRedis implements NameUUIDStorage {
     }
 
     @Override
-    public @NonNull PriorityNUS getPriority() {
+    public  PriorityNUS getPriority() {
         return priority;
     }
 
@@ -60,7 +55,7 @@ public class NameUUIDStorageRedis implements NameUUIDStorage {
 
     }
 
-    @SneakyThrows
+
     public void add(String name, UUID uuid) {
         redisConnection.set(table + name, uuid.toString());
         redisConnection.set(table + uuid, name);

@@ -1,10 +1,5 @@
 package ro.deiutzblaxo.cloud.utils.objects;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class Pair<F, L> {
     //facts : FL is from fuck life...
 
@@ -17,6 +12,22 @@ public class Pair<F, L> {
         first = f;
 
         last = l;
+    }
+
+    public F getFirst() {
+        return first;
+    }
+
+    public void setFirst(F first) {
+        this.first = first;
+    }
+
+    public L getLast() {
+        return last;
+    }
+
+    public void setLast(L last) {
+        this.last = last;
     }
 
     @Override

@@ -6,7 +6,7 @@
 
     <groupId>ro.deiutzblaxo</groupId>
     <artifactId>Cloud</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -33,11 +33,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>

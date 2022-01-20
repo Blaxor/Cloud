@@ -1,7 +1,6 @@
 package ro.deiutzblaxo.cloud.data.mysql;
 
-import lombok.Getter;
-import lombok.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
 
@@ -12,7 +11,6 @@ import java.util.concurrent.*;
 
 public class MySQLManager {
 
-    @Getter
     private final MySQLConnection connection;
     private final ExecutorService pool;
 
@@ -236,6 +234,9 @@ public class MySQLManager {
         }
     }
 
+    public MySQLConnection getConnection() {
+        return connection;
+    }
 }
 
 class MySQLThreadFactory implements ThreadFactory {
@@ -251,6 +252,5 @@ class MySQLThreadFactory implements ThreadFactory {
         return new Thread(r, count + "-Cloud-MySQL");
 
     }
-
 
 }

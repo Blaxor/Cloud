@@ -1,12 +1,9 @@
 package ro.deiutzblaxo.cloud.nus;
 
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.datastructure.OrderType;
 import ro.deiutzblaxo.cloud.datastructure.QuickSortReflectByMethodReturn;
+import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
 import ro.deiutzblaxo.cloud.utils.objects.Pair;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,24 +12,32 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class NameUUIDManager {
-    @Getter
-    @Setter
+
+
     private ArrayList<NameUUIDStorage> storages = new ArrayList<>();
     private ConcurrentLinkedQueue<Pair<UUID, String>> q = new ConcurrentLinkedQueue<>();
 
-    @SneakyThrows
+
     public NameUUIDManager(NameUUIDStorage... storage) {
         for (int i = 0; i < storage.length; i++) {
             storages.add(storage[i]);
         }
-        QuickSortReflectByMethodReturn.sort(storages, 0, storages.size() - 1, "getPriority", OrderType.DESCENDING);
+        try {
+            QuickSortReflectByMethodReturn.sort(storages, 0, storages.size() - 1, "getPriority", OrderType.DESCENDING);
+        } catch (NoSuchFieldException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         new Thread(() -> {
             while (true) {
                 if (!q.isEmpty()) {
                     Pair<UUID, String> value = q.remove();
                     storages.forEach(nameUUIDStorage -> {
-                        nameUUIDStorage.add(value.getLast(), value.getFirst());
+                        try {
+                            nameUUIDStorage.add(value.getLast(), value.getFirst());
+                        } catch (ToManyArgs e) {
+                            e.printStackTrace();
+                        }
                     });
                 }
             }

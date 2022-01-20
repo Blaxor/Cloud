@@ -1,6 +1,5 @@
 package ro.deiutzblaxo.cloud.utils;
 
-import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -23,8 +22,7 @@ public class Reflection {
         return obj;
     }
 
-    @SneakyThrows
-    public static Object getVariableByType(Object object, Class type) {
+    public static Object getVariableByType(Object object, Class type) throws IllegalAccessException {
         Field[] fields = object.getClass().getDeclaredFields();
         Field field = null;
 
