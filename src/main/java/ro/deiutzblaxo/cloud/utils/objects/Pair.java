@@ -18,4 +18,14 @@ public class Pair<F, L> {
 
         last = l;
     }
+
+    @Override
+    public String toString() {
+        return "Pair{" +
+                "first=" + first +
+                ", last=" + last +
+                '}';
+    }
+
+
 }

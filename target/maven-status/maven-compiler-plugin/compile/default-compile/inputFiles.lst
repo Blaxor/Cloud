@@ -1,14 +1,22 @@
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageRedis.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageYaml.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageMySQL.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Pair.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\ToManyArgs.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\redis\RedisConnection.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLConnection.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NusType.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\CloudLogger.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLManager.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDManager.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDStorage.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Triplet.java
-D:\Java\IntelliJ\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\NoFoundException.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDStorage.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\CloudLogger.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\ToManyArgs.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\PriorityNUS.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLConnection.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageYaml.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\geometry\twod\objects\Point2D.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDManager.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageMySQL.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\Reflection.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageRedis.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\NoFoundException.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\datastructure\BinarySearchReflect.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\UtilsCompare.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Pair.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\datastructure\OrderType.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLManager.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Triplet.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NusType.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\datastructure\QuickSortReflect.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\geometry\twod\PointsGenerator.java
+E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\redis\RedisConnection.java

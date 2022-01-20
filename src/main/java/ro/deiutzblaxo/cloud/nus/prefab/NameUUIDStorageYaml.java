@@ -1,8 +1,10 @@
 package ro.deiutzblaxo.cloud.nus.prefab;
 
 import lombok.Data;
+import lombok.NonNull;
 import org.yaml.snakeyaml.Yaml;
 import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
+import ro.deiutzblaxo.cloud.nus.PriorityNUS;
 import ro.deiutzblaxo.cloud.utils.CloudLogger;
 
 import java.io.*;
@@ -15,10 +17,13 @@ public class NameUUIDStorageYaml implements NameUUIDStorage {
     private TreeMap<String, String> cache;
     private final File file;
     private Timer timer = new Timer();
+    private PriorityNUS priority;
 
-    public NameUUIDStorageYaml(File diskCacheFolder) {
+    public NameUUIDStorageYaml(File diskCacheFolder, long saveInterval, PriorityNUS priority) {
+
 
         file = new File(diskCacheFolder, "cachePlayer.yml");
+        this.priority = priority;
         try {
             loadSave();
         } catch (FileNotFoundException e) {
@@ -47,7 +52,7 @@ public class NameUUIDStorageYaml implements NameUUIDStorage {
                     }
                 }
             }
-        }, 0, 1000 * 60 * 15);
+        }, 0, saveInterval);
     }
 
     public void updateSave() throws FileNotFoundException {
@@ -88,6 +93,11 @@ public class NameUUIDStorageYaml implements NameUUIDStorage {
     @Override
     public String getRealName(String fakename) {
         return null;
+    }
+
+    @Override
+    public @NonNull PriorityNUS getPriority() {
+        return priority;
     }
 
     public void add(String name, UUID uuid) {

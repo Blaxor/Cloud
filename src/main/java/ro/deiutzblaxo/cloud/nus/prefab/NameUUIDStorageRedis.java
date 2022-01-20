@@ -2,9 +2,11 @@ package ro.deiutzblaxo.cloud.nus.prefab;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import ro.deiutzblaxo.cloud.data.redis.RedisConnection;
 import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
+import ro.deiutzblaxo.cloud.nus.PriorityNUS;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -14,10 +16,20 @@ public class NameUUIDStorageRedis implements NameUUIDStorage {
 
     private RedisConnection redisConnection;
     private String table;
+    private PriorityNUS priority;
+
+    public NameUUIDStorageRedis(RedisConnection redisConnection, String tablePrefix,PriorityNUS priority) {
+        this.redisConnection = redisConnection;
+        table = tablePrefix + "NameUUIDStorage";
+        this.priority = priority;
+
+
+    }
 
     public NameUUIDStorageRedis(RedisConnection redisConnection, String tablePrefix) {
         this.redisConnection = redisConnection;
         table = tablePrefix + "NameUUIDStorage";
+        this.priority = PriorityNUS.HIGH;
 
     }
 
@@ -33,6 +45,11 @@ public class NameUUIDStorageRedis implements NameUUIDStorage {
     @Override
     public String getRealName(String fakename) {
         return null;
+    }
+
+    @Override
+    public @NonNull PriorityNUS getPriority() {
+        return priority;
     }
 
     public String getNameByUUID(UUID uuid) {

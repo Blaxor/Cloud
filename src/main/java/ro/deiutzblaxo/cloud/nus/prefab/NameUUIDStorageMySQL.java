@@ -9,6 +9,7 @@ import ro.deiutzblaxo.cloud.data.mysql.MySQLManager;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
 import ro.deiutzblaxo.cloud.nus.NusType;
+import ro.deiutzblaxo.cloud.nus.PriorityNUS;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -18,15 +19,18 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
 
     private MySQLManager mySQLManager;
     private String table;
+    private PriorityNUS priority;
 
-    public NameUUIDStorageMySQL(MySQLConnection connection, int threads, String tablePrefix) {
+    public NameUUIDStorageMySQL(MySQLConnection connection, int threads, String tablePrefix,PriorityNUS priority) {
         mySQLManager = new MySQLManager(connection, threads);
         table = tablePrefix + "_NameUUIDStorage";
         createTable();
+        this.priority = priority;
     }
 
     public NameUUIDStorageMySQL(MySQLManager manager, String tablePrefix) {
         mySQLManager = manager;
+        priority = PriorityNUS.LOW;
         this.table = tablePrefix + "_NameUUIDStorage";
         createTable();
     }
@@ -67,6 +71,11 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
         } catch (NoFoundException e) {
             return null;
         }
+    }
+
+    @Override
+    public PriorityNUS getPriority() {
+        return priority;
     }
 
     public String getNameByUUID(UUID uuid) {
