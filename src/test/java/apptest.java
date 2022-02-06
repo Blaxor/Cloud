@@ -1,3 +1,4 @@
+import ro.deiutzblaxo.cloud.math.geometry.twod.PointsGenerator;
 import ro.deiutzblaxo.cloud.math.geometry.twod.objects.Point2D;
 import ro.deiutzblaxo.cloud.datastructure.BinarySearchReflect;
 import ro.deiutzblaxo.cloud.datastructure.OrderType;
@@ -37,7 +38,9 @@ public class apptest {
 
 
     public static void main(String[] args) throws NoSuchFieldException {
-        testMath();
+        System.out.println("started: " + LocalDateTime.now());
+        //PointsGenerator.pointsForACircle(new Point2D(0, 0), 5, 100);
+        System.out.println("finish: " + LocalDateTime.now());
     }
 
 
