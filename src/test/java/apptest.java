@@ -1,3 +1,6 @@
+import ro.deiutzblaxo.cloud.data.mysql.classic.MySQLManagerNormal;
+import ro.deiutzblaxo.cloud.data.mysql.hikari.MySQLConnectionHikari;
+import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
 import ro.deiutzblaxo.cloud.math.geometry.twod.PointsGenerator;
 import ro.deiutzblaxo.cloud.math.geometry.twod.objects.Point2D;
 import ro.deiutzblaxo.cloud.datastructure.BinarySearchReflect;
@@ -37,10 +40,32 @@ public class apptest {
     }
 
 
-    public static void main(String[] args) throws NoSuchFieldException {
+    public static void main(String[] args) {
         System.out.println("started: " + LocalDateTime.now());
         //PointsGenerator.pointsForACircle(new Point2D(0, 0), 5, 100);
         System.out.println("finish: " + LocalDateTime.now());
+        MySQLManagerNormal manager = new MySQLManagerNormal(
+                new MySQLConnectionHikari(
+                        "192.168.1.132",
+                        3306,
+                        "TEST",
+                        "deiu",
+                        "password",
+                        "",
+                        5,
+                        0),
+                2);
+        System.out.println("test 2");
+        manager.createTable("test", "ID VARCHAR(255)", "TEST VARCHAR(255)");
+        System.out.println("test 3");
+        try {
+            manager.insert("test", new String[]{"ID","TEST"}, new String[]{"test","TEST"});
+        } catch (ToManyArgs e) {
+            e.printStackTrace();
+        }
+        System.out.println("test 4");
+        System.out.println("test 5");
+       manager.getConnection().close();
     }
 
 

@@ -51,7 +51,7 @@ public class NameUUIDStorageYaml implements NameUUIDStorage {
                     }
                 }
             }
-        }, 0, saveInterval);
+        }, 0, saveInterval*1000);
     }
 
     public void updateSave() throws FileNotFoundException {

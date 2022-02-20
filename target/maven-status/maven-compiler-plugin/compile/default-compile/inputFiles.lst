@@ -1,34 +1,37 @@
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\twod\PointsGenerator.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\ToManyArgs.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLConnection.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\convertos\bukkit\PointsConvertor.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\images\Point2DColor.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDManager.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageMySQL.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\threed\PointsGenerator.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\twod\objects\Point2D.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLManager.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\twod\shapes\Circle.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Triplet.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\Math.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\QuickSortReflectByMethodReturn.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\redis\RedisConnection.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\images\ImagesToPoints.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDStorage.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\CloudLogger.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\PriorityNUS.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\interfaces\CloudThread.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageYaml.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\Reflection.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\threed\objects\Point3D.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageRedis.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\NoFoundException.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\BinarySearchReflect.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\UtilsCompare.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Pair.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\OrderType.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NusType.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\SphereThread.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\interfaces\CallBack.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\CircleThread.java
-E:\Java source codes\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\QuickSortReflectByVariable.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\classic\MySQLManagerNormal.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\classic\MySQLConnectionNormal.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLManager.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\threed\PointsGenerator.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageYaml.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDManager.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageRedis.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\interfaces\CallBack.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Triplet.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\MySQLConnection.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\QuickSortReflectByMethodReturn.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\QuickSortReflectByVariable.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\mysql\hikari\MySQLConnectionHikari.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\convertos\bukkit\PointsConvertor.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NusType.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\PriorityNUS.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\images\ImagesToPoints.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\prefab\NameUUIDStorageMySQL.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\twod\PointsGenerator.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\twod\shapes\Circle.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\ToManyArgs.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\UtilsCompare.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\OrderType.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\nus\NameUUIDStorage.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\Reflection.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\data\redis\RedisConnection.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\datastructure\BinarySearchReflect.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\objects\Pair.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\expcetions\NoFoundException.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\images\Point2DColor.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\interfaces\CloudThread.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\SphereThread.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\threed\objects\Point3D.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\geometry\twod\objects\Point2D.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\utils\CloudLogger.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\threads\CircleThread.java
+C:\Users\pandu\Documents\GitHub\Cloud\src\main\java\ro\deiutzblaxo\cloud\math\Math.java

@@ -3,6 +3,7 @@ package ro.deiutzblaxo.cloud.nus.prefab;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import ro.deiutzblaxo.cloud.data.mysql.MySQLConnection;
 import ro.deiutzblaxo.cloud.data.mysql.MySQLManager;
+import ro.deiutzblaxo.cloud.data.mysql.classic.MySQLManagerNormal;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
 import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
@@ -20,7 +21,7 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
     private PriorityNUS priority;
 
     public NameUUIDStorageMySQL(MySQLConnection connection, int threads, String tablePrefix,PriorityNUS priority) {
-        mySQLManager = new MySQLManager(connection, threads);
+        mySQLManager = new MySQLManagerNormal(connection, threads);
         table = tablePrefix + "_NameUUIDStorage";
         createTable();
         this.priority = priority;

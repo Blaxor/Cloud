@@ -4,116 +4,94 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.concurrent.*;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 
-public class MySQLManager {
+public interface MySQLManager {
 
-    private final MySQLConnection connection;
-    private final ExecutorService pool;
-
-    public MySQLManager(@NonNull MySQLConnection connection, int nthreads) {
-        this.connection = connection;
-        pool = Executors.newFixedThreadPool(nthreads, new MySQLThreadFactory());
-    }
-
-
-    public <T> void insert(@NonNull String table, @NonNull String[] columns, @NonNull T[] values) throws ToManyArgs {
+    default <T> void insert(@NonNull String table, @NonNull String[] columns, @NonNull T[] values) throws ToManyArgs {
 
         if (columns.length != values.length)
             throw new ToManyArgs("Too many/less arguments!");
-        CompletableFuture.runAsync(() -> {
-            try {
-                StringBuilder builder = new StringBuilder("INSERT INTO " + table + " (");
-                for (int i = 0; i < columns.length; i++) {
-                    builder.append(columns[i]).append(i < columns.length - 1 ? "," : ") VALUES (");
-                }
-                for (int i = 0; i < values.length; i++) {
-                    builder.append("?").append(i < values.length - 1 ? "," : ");");
-                }
-                PreparedStatement statement = getPreparedStatement(builder.toString());
+
+        try {
+            StringBuilder builder = new StringBuilder("INSERT INTO " + table + " (");
+            for (int i = 0; i < columns.length; i++) {
+                builder.append(columns[i]).append(i < columns.length - 1 ? "," : ") VALUES (");
+            }
+            for (int i = 0; i < values.length; i++) {
+                builder.append("?").append(i < values.length - 1 ? "," : ");");
+            }
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement(builder.toString());
+
                 for (int i = 1; i <= values.length; i++) {
                     statement.setObject(i, values[i - 1]);
                 }
                 statement.execute();
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
 
-        }, pool);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
+ /*   default boolean execute(@NonNull String sql) {
 
-    public PreparedStatement getPreparedStatement(@NonNull String sql) {
         try {
-            return connection.getConnection().prepareStatement(sql);
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                return statement.execute();
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return null;
-        }
-    }
-
-
-    public boolean execute(@NonNull String sql) {
-        CompletableFuture<Boolean> result = CompletableFuture.supplyAsync(() ->
-        {
-            try {
-                return getPreparedStatement(sql).execute();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-                return false;
-            }
-        }, pool);
-        try {
-            return result.get();
-        } catch (InterruptedException | ExecutionException e) {
             return false;
         }
+
+
     }
 
-    public int executeUpdate(@NonNull String sql) {
-        CompletableFuture<Integer> result = CompletableFuture.supplyAsync(() ->
-        {
-            try {
-                return getPreparedStatement(sql).executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-                return 0;
-            }
-        }, pool);
+    default int executeUpdate(@NonNull String sql) {
+
         try {
-            return result.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                return statement.executeUpdate();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
             return 0;
         }
     }
 
-    public ResultSet executeQuery(@NonNull String sql) {
-        CompletableFuture<ResultSet> result = CompletableFuture.supplyAsync(() -> {
+    default ResultSet executeQuery(@NonNull String sql) {
 
-            try {
-                return getPreparedStatement(sql).executeQuery();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-                return null;
-            }
 
-        }, pool);
         try {
-            return result.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+
+                PreparedStatement statement = connection.prepareStatement(sql);
+                return statement.executeQuery();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
             return null;
         }
-    }
 
-    public <T> boolean exists(@NonNull String table, @NonNull String collum, @NonNull T value) {
+
+    }*/
+
+    default <T> boolean exists(@NonNull String table, @NonNull String collum, @NonNull T value) {
         try {
-            ResultSet set = executeQuery("SELECT * FROM " + table + " WHERE " + collum + "='" + value + "';");
-            return set.next();
+            try (Connection connection = getConnection().getConnection()) {
+                ResultSet set = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + collum + "='" + value + "';").executeQuery();
+                return set.next();
+            }
         } catch (SQLException exception) {
             exception.printStackTrace();
             return false;
@@ -121,90 +99,153 @@ public class MySQLManager {
     }
 
 
-    public <T> void update(@NonNull String table, @NonNull String keyCollum, @NonNull T key, @NonNull String[] valuesCollum, @NonNull T[] values) throws
+    default <T> void update(@NonNull String table, @NonNull String keyCollum, @NonNull T key, @NonNull String[] valuesCollum, @NonNull T[] values) throws
             ToManyArgs {
 
         if (valuesCollum.length != values.length)
             throw new ToManyArgs("Too many/less arguments!");
-        CompletableFuture.runAsync(() -> {
-            try {
-                StringBuilder builder = new StringBuilder("UPDATE " + table + " SET ");
-                for (int i = 0; i < valuesCollum.length; i++) {
-                    builder.append(valuesCollum[i]).append(" = ? ").append(i < valuesCollum.length - 1 ? "," : " ");
-                }
-                builder.append("WHERE ").append(keyCollum).append(" = ? ;");
-                PreparedStatement statement = getPreparedStatement(builder.toString());
+
+        try {
+            StringBuilder builder = new StringBuilder("UPDATE " + table + " SET ");
+            for (int i = 0; i < valuesCollum.length; i++) {
+                builder.append(valuesCollum[i]).append(" = ? ").append(i < valuesCollum.length - 1 ? "," : " ");
+            }
+            builder.append("WHERE ").append(keyCollum).append(" = ? ;");
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement(builder.toString());
+
                 int i = 1;
                 for (; i <= valuesCollum.length; i++) {
                     statement.setObject(i, values[i - 1]);
                 }
                 statement.setObject(i, key);
                 statement.executeUpdate();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-        }, pool);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public <T> T get(@NonNull String table, @NonNull String valueColumn, @NonNull String keyColumn, @NonNull Object key, @NonNull Class<T> type) throws NoFoundException {
-        String query = "SELECT * FROM " + table + " WHERE " + keyColumn + " = ? ;";
-        PreparedStatement statement = getPreparedStatement(query);
+    default HashMap<String, Object> gets(@NonNull String table, @NonNull String[] valueColumns, @NonNull String keyColumn, @NonNull Object key, @NonNull Class[] types) {
+        String query = "SELECT ";
+        for (int i = 0; i < valueColumns.length; i++) {
+            query += valueColumns[i];
+            if (i < valueColumns.length - 1) {
+                query += ",";
+            }
+        }
+        query += " FROM " + table + " WHERE " + keyColumn + " = ? ;";
         try {
-            statement.setObject(1, key);
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement(query);
 
-            ResultSet r = statement.executeQuery();
-            if (!r.next())
-                throw new NoFoundException("Data not found in table " + table + ", keyColumn:" + keyColumn + ", key:" + key + ", valueColumn: " + valueColumn);
-            return r.getObject(valueColumn, type);
+
+                statement.setObject(1, key);
+                ResultSet r = statement.executeQuery();
+                if (!r.next())
+                    throw new NoFoundException("Data not found in table " + table + ", keyColumn:" + keyColumn + ", key:" + key + ", valueColumn: " + valueColumns);
+                HashMap<String, Object> hashMap = new HashMap<>();
+                for (int i = 0; i < valueColumns.length; i++) {
+                    if (types[i] == Blob.class)
+                        hashMap.put(valueColumns[i], r.getBlob(valueColumns[i]));
+                    else
+                        hashMap.put(valueColumns[i], r.getObject(valueColumns[i]));
+                }
+                return hashMap;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        }
+
+
+    }
+
+    default <T> T get(@NonNull String table, @NonNull String valueColumn, @NonNull String keyColumn, @NonNull Object key, @NonNull Class<T> type) throws NoFoundException {
+        String query = "SELECT " + valueColumn + " FROM " + table + " WHERE " + keyColumn + " = ? ;";
+
+        try {
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setObject(1, key);
+
+                ResultSet r = statement.executeQuery();
+                if (!r.next())
+                    throw new NoFoundException("Data not found in table " + table + ", keyColumn:" + keyColumn + ", key:" + key + ", valueColumn: " + valueColumn);
+                if (type == Blob.class)
+                    return (T) r.getBlob(valueColumn);
+                return r.getObject(valueColumn, type);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public String getString(@NonNull String table, @NonNull String valueColumn, @NonNull String keyColumn, @NonNull Object key) throws NoFoundException {
+    default String getString(@NonNull String table, @NonNull String valueColumn, @NonNull String keyColumn, @NonNull Object key) throws NoFoundException {
         return get(table, valueColumn, keyColumn, key, String.class);
 
     }
 
-    public void createTable(@NonNull String table, @NonNull String... columns) {
+    default void createTable(@NonNull String table, @NonNull String... columns) {
         StringBuilder builder = new StringBuilder("CREATE TABLE IF NOT EXISTS " + table + " (");
         for (int i = 0; i < columns.length; i++) {
             builder.append(columns[i]).append(i == columns.length - 1 ? ");" : ",");
         }
-        execute(builder.toString());
+        try {
+            try (Connection connection = getConnection().getConnection()) {
+                connection.prepareStatement(builder.toString()).execute();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void createDataBase(@NonNull String database) {
-        CompletableFuture.runAsync(() -> {
-            try {
-                PreparedStatement statement = getPreparedStatement("CREATE DATABASE IF NOT EXISTS ?");
+    default void createDataBase(@NonNull String database) {
+
+        try {
+            try (Connection connection = getConnection().getConnection()) {
+
+                PreparedStatement statement = connection.prepareStatement("CREATE DATABASE IF NOT EXISTS ?");
                 statement.setString(1, database);
                 statement.execute();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-        }, pool);
-    }
-
-    public void deleteRow(String table, String ByField, String field) {
-        CompletableFuture.runAsync(() -> executeUpdate("DELETE FROM " + table + " WHERE " + ByField + " = '" + field + "';"), pool);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public String getLikeString(String table, String byField, String field, String get) throws NoFoundException {
-
-        PreparedStatement statement = getPreparedStatement("SELECT * FROM " + table + " WHERE " + byField + " LIKE ? ;");
+    default void deleteRow(String table, String ByField, String field) {
         try {
-            statement.setObject(1, field);
-            ResultSet set = statement.executeQuery();
-
-            if (!(set.next())) {
-                throw new NoFoundException("No data found");
+            try (Connection con = getConnection().getConnection()) {
+                con.prepareStatement("DELETE FROM " + table + " WHERE " + ByField + " = '" + field + "';").execute();
             }
-            return set.getString(get);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ;
+        }
+    }
+
+    default String getLikeString(String table, String byField, String field, String get) throws NoFoundException {
+
+        try {
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + table + " WHERE " + byField + " LIKE ? ;");
+
+
+                statement.setObject(1, field);
+                ResultSet set = statement.executeQuery();
+
+                if (!(set.next())) {
+                    throw new NoFoundException("No data found");
+                }
+                return set.getString(get);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return null;
@@ -213,44 +254,36 @@ public class MySQLManager {
 
     }
 
-    public void setNull(String Table, String ByField, String search, String fieldToSet) {
+    default void setNull(String Table, String ByField, String search, String fieldToSet) {
 
         try {
-            PreparedStatement statement = getPreparedStatement("UPDATE " + Table + " SET " + fieldToSet + " = NULL WHERE " + ByField + "= ? ");
-            statement.setObject(1, search);
-            statement.executeUpdate();
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement("UPDATE " + Table + " SET " + fieldToSet + " = NULL WHERE " + ByField + "= ? ");
+                statement.setObject(1, search);
+                statement.executeUpdate();
+            }
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    public void delete(String table, String collum, String value) {
+    default void delete(String table, String collum, String value) {
         try {
-            PreparedStatement statement = getPreparedStatement("DELETE FROM " + table + " WHERE " + collum + "=?;");
-            statement.setObject(1, value);
-            statement.executeUpdate();
+            try (Connection connection = getConnection().getConnection()) {
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + collum + "=?;");
+                statement.setObject(1, value);
+                statement.executeUpdate();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public MySQLConnection getConnection() {
-        return connection;
-    }
-}
+    MySQLConnection getConnection();
 
-class MySQLThreadFactory implements ThreadFactory {
-    private int count = 0;
+    ExecutorService getPool();
 
-    public int getCount() {
-        return count;
-    }
-
-    @Override
-    public Thread newThread(Runnable r) {
-        count += 1;
-        return new Thread(r, count + "-Cloud-MySQL");
-
-    }
-
+    void close();
 }
