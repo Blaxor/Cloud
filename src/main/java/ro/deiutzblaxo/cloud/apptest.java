@@ -1,3 +1,6 @@
+package ro.deiutzblaxo.cloud;
+
+import com.google.common.net.InetAddresses;
 import com.google.gson.JsonObject;
 import ro.deiutzblaxo.cloud.datastructure.BinarySearchReflect;
 import ro.deiutzblaxo.cloud.datastructure.OrderType;
@@ -10,8 +13,9 @@ import ro.deiutzblaxo.cloud.net.udp.UDPConnection;
 import ro.deiutzblaxo.cloud.utils.objects.Pair;
 
 import java.io.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +30,7 @@ public class apptest {
                 // x stores the layer in which (i, j)th
                 // element lies
                 int x;
+                new InetAddress("rwar");
 
                 // Finds minimum of four inputs
                 x = Math.min(Math.min(i, j),
@@ -52,7 +57,7 @@ public class apptest {
     add(132);
     add(123444444444l);
         }};
-        UDPConnection.sendMessage(InetAddress.getByName("35.228.238.182"),51112,objs);
+        UDPConnection.sendMessage(InetAddress.getByName("78.96.84.250"),51112,objs);
     }
 
     public static List<Object> read(byte[] bytes) throws IOException {

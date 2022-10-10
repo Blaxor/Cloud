@@ -66,9 +66,9 @@ public class MySQLConnectionNormal implements MySQLConnection {
                 CloudLogger.getLogger().log(Level.WARNING, "A connection is already existing. This may produce errors");
             }
             this.connection = DriverManager.getConnection(DEFAULT_PREFIX + host + ":" + port + "/" + (params == "" ? "" : "?" + params), username, password);
-            CloudLogger.getLogger().log(Level.INFO, "Connected with success with user: " + username + " and password " + password);
+            CloudLogger.getLogger().log(Level.INFO, "Connected");
         } catch (SQLException throwables) {
-            CloudLogger.getLogger().log(Level.INFO, "Failed connecting with user: " + username + " and password " + password);
+            CloudLogger.getLogger().log(Level.INFO, "Connection failed");
             throwables.printStackTrace();
         }
     }
