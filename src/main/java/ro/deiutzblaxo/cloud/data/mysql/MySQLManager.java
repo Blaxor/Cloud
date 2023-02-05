@@ -286,4 +286,15 @@ public interface MySQLManager {
     ExecutorService getPool();
 
     void close();
+
+    default ResultSet getPreparedStatement(String string) throws SQLException {
+
+        try (Connection connection = getConnection().getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(string);
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw e;
+        }
+
+    }
 }
