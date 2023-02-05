@@ -295,6 +295,9 @@ public interface MySQLManager {
         } catch (SQLException e) {
             throw e;
         }
+    }
 
+    default PreparedStatement getPrepareStatement(String string) throws SQLException {
+        return getConnection().getConnection().prepareStatement(string);
     }
 }
