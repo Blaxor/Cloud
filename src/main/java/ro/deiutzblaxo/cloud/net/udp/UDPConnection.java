@@ -28,6 +28,20 @@ public class UDPConnection {
         socket.close();
 
     }
+    public static void sendMessage(InetAddress address, int port, Object object) throws IOException {
+
+        DatagramSocket socket = new DatagramSocket();
+        byte[] message = write(object);
+        byte[] numberBytes = write(message.length);
+        DatagramPacket packet = new DatagramPacket(numberBytes, numberBytes.length, address, port);
+
+        socket.send(packet);
+        packet = new DatagramPacket(message, message.length, address, port);
+        socket.send(packet);
+        socket.close();
+
+    }
+
 
 
     public static List<Object> readMessage(int port) throws IOException {
@@ -92,5 +106,21 @@ public class UDPConnection {
         stream.flush();
         return result;
     }
+    private static byte[] write(Object object) {
+
+        byte[] result= null;
+        try(ByteArrayOutputStream output = new ByteArrayOutputStream();
+                        ObjectOutputStream stream = new ObjectOutputStream(output))
+        {
+            stream.writeObject(object);
+         result = output.toByteArray();
+            stream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return result;
+    }
+
+
 
 }
