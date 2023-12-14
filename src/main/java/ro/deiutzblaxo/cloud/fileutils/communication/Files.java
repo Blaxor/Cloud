@@ -2,7 +2,7 @@ package ro.deiutzblaxo.cloud.fileutils.communication;
 
 import java.io.*;
 
-public class Files {
+public abstract class Files {
 
     public static void sendFile(DataOutputStream dataOutputStream , File file,int batch_size) throws IOException {
         {

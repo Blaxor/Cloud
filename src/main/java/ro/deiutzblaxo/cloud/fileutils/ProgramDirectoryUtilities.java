@@ -3,7 +3,7 @@ package ro.deiutzblaxo.cloud.fileutils;
 import java.io.File;
 import java.net.URISyntaxException;
 
-public class ProgramDirectoryUtilities {
+public abstract class ProgramDirectoryUtilities {
     private static String getJarName() {
         return new File(ProgramDirectoryUtilities.class.getProtectionDomain()
                 .getCodeSource()

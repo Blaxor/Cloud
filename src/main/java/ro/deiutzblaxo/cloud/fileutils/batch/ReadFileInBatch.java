@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class ReadFileInBatch {
+public abstract class ReadFileInBatch {
 
     public static void ReadFileBatch(File file,int batchSize, Callable callable) throws IOException {
         byte[] buffer = new byte[batchSize];
