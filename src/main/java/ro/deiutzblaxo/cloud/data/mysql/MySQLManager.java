@@ -2,20 +2,18 @@ package ro.deiutzblaxo.cloud.data.mysql;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
-import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
+import ro.deiutzblaxo.cloud.expcetions.TooManyArgs;
 
 import java.sql.*;
 import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 
 public interface MySQLManager {
 
-    default <T> void insert(@NonNull String table, @NonNull String[] columns, @NonNull T[] values) throws ToManyArgs {
+    default <T> void insert(@NonNull String table, @NonNull String[] columns, @NonNull T[] values) throws TooManyArgs {
 
         if (columns.length != values.length)
-            throw new ToManyArgs("Too many/less arguments!");
+            throw new TooManyArgs("Too many/less arguments!");
 
         try {
             StringBuilder builder = new StringBuilder("INSERT INTO " + table + " (");
@@ -100,10 +98,10 @@ public interface MySQLManager {
 
 
     default <T> void update(@NonNull String table, @NonNull String keyCollum, @NonNull T key, @NonNull String[] valuesCollum, @NonNull T[] values) throws
-            ToManyArgs {
+            TooManyArgs {
 
         if (valuesCollum.length != values.length)
-            throw new ToManyArgs("Too many/less arguments!");
+            throw new TooManyArgs("Too many/less arguments!");
 
         try {
             StringBuilder builder = new StringBuilder("UPDATE " + table + " SET ");
@@ -210,7 +208,7 @@ public interface MySQLManager {
         try {
             try (Connection connection = getConnection().getConnection()) {
 
-                PreparedStatement statement = connection.prepareStatement("CREATE DATABASE IF NOT EXISTS ?");
+                PreparedStatement statement = connection.prepareStatement("CREATE DATABASE IF NOT EXISTS ? ;");
                 statement.setString(1, database);
                 statement.execute();
             }

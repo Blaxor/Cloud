@@ -1,7 +1,7 @@
 package ro.deiutzblaxo.cloud.nus;
 
 
-import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
+import ro.deiutzblaxo.cloud.expcetions.TooManyArgs;
 
 import java.util.UUID;
 
@@ -16,5 +16,5 @@ public interface NameUUIDStorage {
 
     PriorityNUS getPriority();
 
-    void add(String name, UUID uuid) throws ToManyArgs;
+    void add(String name, UUID uuid) throws TooManyArgs;
 }

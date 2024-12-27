@@ -5,7 +5,7 @@ import ro.deiutzblaxo.cloud.data.mysql.MySQLConnection;
 import ro.deiutzblaxo.cloud.data.mysql.MySQLManager;
 import ro.deiutzblaxo.cloud.data.mysql.classic.MySQLManagerNormal;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
-import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
+import ro.deiutzblaxo.cloud.expcetions.TooManyArgs;
 import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
 import ro.deiutzblaxo.cloud.nus.NusType;
 import ro.deiutzblaxo.cloud.nus.PriorityNUS;
@@ -95,7 +95,7 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
         return table;
     }
 
-    public void add(String name, UUID uuid) throws ToManyArgs {
+    public void add(String name, UUID uuid) throws TooManyArgs {
         if (!mySQLManager.exists(table, "UUID", uuid.toString())) {
             mySQLManager.insert(table, new String[]{"UUID", "NAME"}, new Object[]{uuid.toString(), name});
         }

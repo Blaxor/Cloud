@@ -3,7 +3,7 @@ package ro.deiutzblaxo.cloud.nus;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.datastructure.OrderType;
 import ro.deiutzblaxo.cloud.datastructure.QuickSortReflectByMethodReturn;
-import ro.deiutzblaxo.cloud.expcetions.ToManyArgs;
+import ro.deiutzblaxo.cloud.expcetions.TooManyArgs;
 import ro.deiutzblaxo.cloud.utils.objects.Pair;
 
 import java.lang.reflect.InvocationTargetException;
@@ -35,7 +35,7 @@ public class NameUUIDManager {
                     storages.forEach(nameUUIDStorage -> {
                         try {
                             nameUUIDStorage.add(value.getLast(), value.getFirst());
-                        } catch (ToManyArgs e) {
+                        } catch (TooManyArgs e) {
                             e.printStackTrace();
                         }
                     });
