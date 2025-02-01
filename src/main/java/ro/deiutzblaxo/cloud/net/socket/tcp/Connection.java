@@ -1,4 +1,4 @@
-package ro.deiutzblaxo.cloud.net.tcp;
+package ro.deiutzblaxo.cloud.net.socket.tcp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
