@@ -15,6 +15,14 @@ public abstract class CommunicationHelper {
 
     private final static Logger logger = LogManager.getLogger(CommunicationHelper.class);
 
+
+    /**
+     * Sends a {@link PacketData} object over the given {@link SocketChannel}.
+     *
+     * @param clientChannel The {@link SocketChannel} to send the data through.
+     * @param packetData    The {@link PacketData} to be transmitted.
+     * @throws OutputConnectionException If an error occurs during the transmission process.
+     */
     public static void send(SocketChannel clientChannel, PacketData packetData) throws OutputConnectionException {
         if (packetData == null) {
             return;
@@ -29,6 +37,14 @@ public abstract class CommunicationHelper {
         }
     }
 
+    /**
+     * Processes the incoming {@link PacketData} using the appropriate handler instance.
+     *
+     * @param clientChannel The {@link SocketChannel} from which the data is received.
+     * @param packetData    The {@link PacketData} to be processed.
+     * @return The processed {@link PacketData} object.
+     * @throws DataHandlerException If no handler is found for the operation.
+     */
     public static PacketData process(SocketChannel clientChannel, PacketData packetData) {
 
         Handler handlerInstance = PacketDataHandlers.getInstanceHandler(packetData.getHeader().getOperation());

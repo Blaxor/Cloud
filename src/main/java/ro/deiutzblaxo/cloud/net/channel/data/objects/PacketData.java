@@ -43,15 +43,37 @@ public class PacketData implements Serializable, Data {
         this(new Header(operation, content.length, -1), new Body(content));
     }
 
+    /**
+     * Constructs a PacketData object with an operation, body content, and callback ID.
+     *
+     * @param operation  The operation code associated with this packet.
+     * @param content    The body content as a byte array.
+     * @param callbackId The callback ID for handling responses.
+     */
     public PacketData(int operation, byte[] content, int callbackId) {
         this(new Header(operation, content.length, callbackId), new Body(content));
     }
 
+    /**
+     * Constructs a PacketData object with an operation and string content.
+     * The content is encoded using UTF-16.
+     *
+     * @param operation The operation code associated with this packet.
+     * @param content   The body content as a string.
+     */
     public PacketData(int operation, String content) {
         this(new Header(operation, content.getBytes(StandardCharsets.UTF_16).length, -1),
                 new Body(content.getBytes(StandardCharsets.UTF_16)));
     }
 
+    /**
+     * Constructs a PacketData object with an operation, string content, and callback ID.
+     * The content is encoded using UTF-16.
+     *
+     * @param operation  The operation code associated with this packet.
+     * @param content    The body content as a string.
+     * @param callbackId The callback ID for handling responses.
+     */
     public PacketData(int operation, String content, int callbackId) {
         this(new Header(operation, content.getBytes(StandardCharsets.UTF_16).length, callbackId),
                 new Body(content.getBytes(StandardCharsets.UTF_16)));
@@ -70,6 +92,13 @@ public class PacketData implements Serializable, Data {
 
     }
 
+    /**
+     * Reads a PacketData object from a {@link SocketChannel}.
+     *
+     * @param ois The socket channel to read from.
+     * @return The deserialized {@link PacketData} object.
+     * @throws IOException If an I/O error occurs while reading.
+     */
     public static PacketData readPacketData(SocketChannel ois) throws IOException {
 
         Header header1 = Header.readHeader(ois);
@@ -91,6 +120,13 @@ public class PacketData implements Serializable, Data {
         outputStream.flush();
     }
 
+    /**
+     * Writes the PacketData object to a {@link ByteBuffer}.
+     * This method writes the header followed by the body.
+     *
+     * @param buffer The byte buffer to write to.
+     * @return The updated {@link ByteBuffer} containing the written data.
+     */
     @Override
     public ByteBuffer writeObject(ByteBuffer buffer) {
         buffer = header.writeObject(buffer);
@@ -99,6 +135,12 @@ public class PacketData implements Serializable, Data {
         return buffer;
     }
 
+    /**
+     * Checks whether the PacketData object is empty.
+     * A PacketData object is considered empty if both its header and body are empty.
+     *
+     * @return {@code true} if the object is empty, otherwise {@code false}.
+     */
     @Override
     public boolean isEmpty() {
         return body.isEmpty() && header.isEmpty();
@@ -126,6 +168,11 @@ public class PacketData implements Serializable, Data {
         return false;
     }
 
+    /**
+     * Returns a string representation of this PacketData object.
+     *
+     * @return A string containing the header and body information.
+     */
     @Override
     public String toString() {
         return "PacketData{" +

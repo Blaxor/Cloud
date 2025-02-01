@@ -9,16 +9,23 @@ public interface Data {
 
     /**
      * Write to the {@link OutputStream} the encapsulated values, this method should not flush or do any other operation on the {@link OutputStream}
+     *
      * @param outputStream The stream from which to write
      */
     void writeObject(OutputStream outputStream) throws IOException;
 
     /**
      * Write to the {@link ByteBuffer} the encapsulated values, this method should not flush or do any other operation on the {@link ByteBuffer}
+     *
      * @param buffer The stream from which to write
      */
     ByteBuffer writeObject(ByteBuffer buffer);
 
+    /**
+     * Checks whether the data object is empty.
+     *
+     * @return {@code true} if the object contains no meaningful data, otherwise {@code false}.
+     */
     boolean isEmpty();
 
 }

@@ -16,7 +16,7 @@ public class Server {
     public static void main(String[] t) throws IOException {
 
         CloudServer cloudServer = new CloudServer(1234);
-        PacketDataHandlers.addHandler(1, Handler1.class);
+        PacketDataHandlers.registerHandler(1, Handler1.class);
 
 
         cloudServer.start();
