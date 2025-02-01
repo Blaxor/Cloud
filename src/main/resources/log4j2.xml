@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss}-[%t]-%level-[%logger{1}.class:%line] - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+
+        <Root level="ERROR">
+            <AppenderRef ref="Console"/>
+        </Root>
+        
+        <Logger name="ro.deiutzblaxo.cloud.net.channel" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+
+    </Loggers>
+</Configuration>

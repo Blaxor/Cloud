@@ -1,20 +1,10 @@
 package ro.deiutzblaxo.cloud.math.geometry.twod;
 
 
-import org.checkerframework.checker.units.qual.C;
 import ro.deiutzblaxo.cloud.math.geometry.twod.objects.Point2D;
-import ro.deiutzblaxo.cloud.math.geometry.twod.shapes.Circle;
 import ro.deiutzblaxo.cloud.threads.CircleThread;
 import ro.deiutzblaxo.cloud.threads.interfaces.CallBack;
 import ro.deiutzblaxo.cloud.threads.interfaces.CloudThread;
-import ro.deiutzblaxo.cloud.utils.objects.Pair;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class PointsGenerator {
 
@@ -43,7 +33,7 @@ public class PointsGenerator {
     }
 
     public static void pointsForACircle(Point2D middle, float radius, int numberPoints, CallBack<Point2D[]> callback) {
-        CloudThread thread = new CircleThread(middle, radius, numberPoints, callback);
+        CloudThread<Point2D[]> thread = new CircleThread(middle, radius, numberPoints, callback);
         thread.start();
 
     }

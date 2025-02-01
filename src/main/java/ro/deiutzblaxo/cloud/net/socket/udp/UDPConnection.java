@@ -1,7 +1,9 @@
-package ro.deiutzblaxo.cloud.net.udp;
+package ro.deiutzblaxo.cloud.net.socket.udp;
 
 import java.io.*;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
