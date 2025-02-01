@@ -13,40 +13,40 @@ import java.nio.channels.SocketChannel;
 
 public abstract class CommunicationHelper {
 
-    private final static Logger logger =  LogManager.getLogger(CommunicationHelper.class);
+    private final static Logger logger = LogManager.getLogger(CommunicationHelper.class);
 
     public static void send(SocketChannel clientChannel, PacketData packetData) throws OutputConnectionException {
-        if(packetData == null){
+        if (packetData == null) {
             return;
         }
-        if(packetData.isEmpty()){
+        if (packetData.isEmpty()) {
             return;
         }
         try {
-            logger.info("Sending PacketData to server");
             clientChannel.write(packetData.writeObject(ByteBuffer.allocate(0)));
-        }catch (Throwable t){
+        } catch (Throwable t) {
             throw new OutputConnectionException(t);
         }
     }
 
     public static PacketData process(SocketChannel clientChannel, PacketData packetData) {
 
-        logger.error("Process start");
-            Handler handlerInstance = PacketDataHandlers.getInstanceHandler(packetData.getHeader().getOperation());
+        Handler handlerInstance = PacketDataHandlers.getInstanceHandler(packetData.getHeader().getOperation());
 
-            if(handlerInstance == null)
-                throw new DataHandlerException();
-        logger.error("Process continue2");
-            int callBackId = packetData.getHeader().getCallbackId();
+        if (handlerInstance == null) {
+            logger.warn("The handler " + packetData.getHeader().getOperation() + " is not known ");
+            throw new DataHandlerException();
+        }
+        logger.debug("The handler is of type" + handlerInstance.getClass().getName());
 
-            packetData = handlerInstance.process(packetData.getBody().content(), clientChannel);
-        logger.error("Process continue3");
-            if(callBackId >= 0 && packetData != null && !packetData.isEmpty())
-                packetData.getHeader().setCallbackId(callBackId);
-             logger.error("Process end");
-            return packetData;
+        int callBackId = packetData.getHeader().getCallbackId();
 
+        packetData = handlerInstance.process(packetData.getBody().content(), clientChannel);
+
+        if (callBackId >= 0 && packetData != null && !packetData.isEmpty())
+            packetData.getHeader().setCallbackId(callBackId);
+
+        return packetData;
 
     }
 

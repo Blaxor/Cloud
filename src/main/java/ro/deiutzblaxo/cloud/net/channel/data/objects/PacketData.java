@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -17,7 +18,7 @@ import java.nio.channels.SocketChannel;
  */
 public class PacketData implements Serializable, Data {
 
-    private final Header  header;
+    private final Header header;
     private final Body body;
 
     /**
@@ -26,23 +27,55 @@ public class PacketData implements Serializable, Data {
      * @param header The header containing operation information.
      * @param body   The body containing actual data content.
      */
-    public PacketData(Header header, Body body){
-        this.header=header;
-        this.body=body;
+    public PacketData(Header header, Body body) {
+        this.header = header;
+        this.body = body;
 
     }
+
     /**
      * Constructs a PacketData object with the specified operation and body content.
      *
      * @param operation The operation code associated with this packet.
-     * @param content      The body content as byte array.
+     * @param content   The body content as byte array.
      */
-    public PacketData(int operation, byte[] content){
-        this(new Header(operation,content.length,-1),new Body(content));
+    public PacketData(int operation, byte[] content) {
+        this(new Header(operation, content.length, -1), new Body(content));
     }
 
-    public PacketData(int operation, byte[] content,int callbackId){
-        this(new Header(operation,content.length,callbackId),new Body(content));
+    public PacketData(int operation, byte[] content, int callbackId) {
+        this(new Header(operation, content.length, callbackId), new Body(content));
+    }
+
+    public PacketData(int operation, String content) {
+        this(new Header(operation, content.getBytes(StandardCharsets.UTF_16).length, -1),
+                new Body(content.getBytes(StandardCharsets.UTF_16)));
+    }
+
+    public PacketData(int operation, String content, int callbackId) {
+        this(new Header(operation, content.getBytes(StandardCharsets.UTF_16).length, callbackId),
+                new Body(content.getBytes(StandardCharsets.UTF_16)));
+    }
+
+    /**
+     * Deserialize from the {@link InputStream} the object {@link PacketData}.
+     *
+     * @param ois The target {@link InputStream}.
+     * @return The deserialized object.
+     */
+    public static PacketData readPacketData(InputStream ois) throws IOException {
+        Header header1 = Header.readHeader(ois);
+        Body body1 = Body.readBody(ois, header1.bodySize);
+        return new PacketData(header1, body1);
+
+    }
+
+    public static PacketData readPacketData(SocketChannel ois) throws IOException {
+
+        Header header1 = Header.readHeader(ois);
+        Body body1 = Body.readBody(ois, header1.bodySize);
+        return new PacketData(header1, body1);
+
     }
 
     /**
@@ -71,27 +104,6 @@ public class PacketData implements Serializable, Data {
         return body.isEmpty() && header.isEmpty();
     }
 
-    /**
-     * Deserialize from the {@link InputStream} the object {@link PacketData}.
-     * @param ois The target {@link InputStream}.
-     * @return The deserialized object.
-     *
-     */
-    public static PacketData readPacketData(InputStream ois) throws IOException {
-        Header header1 = Header.readHeader(ois);
-        Body body1 = Body.readBody(ois, header1.bodySize);
-        return new PacketData(header1,body1);
-
-    }
-
-    public static PacketData readPacketData(SocketChannel ois) throws IOException {
-
-        Header header1 = Header.readHeader(ois);
-        Body body1 = Body.readBody(ois, header1.bodySize);
-        return new PacketData(header1,body1);
-
-    }
-
     public Header getHeader() {
         return header;
     }
@@ -108,7 +120,7 @@ public class PacketData implements Serializable, Data {
      */
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof PacketData packetData){
+        if (obj instanceof PacketData packetData) {
             return packetData.body.equals(body) && packetData.header.equals(header);
         }
         return false;

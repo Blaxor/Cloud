@@ -6,16 +6,17 @@ import ro.deiutzblaxo.cloud.net.channel.data.objects.PacketData;
 
 import java.nio.channels.SocketChannel;
 
-public class NoneHandler implements Handler{
-    private static final Logger logger = LogManager.getLogger(Handler.class);
+public class NoneHandler implements Handler {
+    private static final Logger logger = LogManager.getLogger(NoneHandler.class);
 
-    public NoneHandler(){
+    public NoneHandler() {
 
     }
+
     @Override
     public PacketData process(byte[] data, SocketChannel clientChannel) {
 
-        logger.info("Got the following message in the NoneHandler: " + new String(data));
+        logger.debug("Got the following message in the NoneHandler: " + new String(data));
 
         return null;
     }
