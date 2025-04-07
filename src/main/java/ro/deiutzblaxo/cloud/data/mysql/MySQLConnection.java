@@ -10,13 +10,15 @@ public interface MySQLConnection {
 
     public void connect(String host, int port, String username, String password, String params);
 
+    public void connect(String host, int port, String database, String username, String password, String params, String prefixPoolName);
+
     public Connection getConnection() throws SQLException;
 
     public int getPoolSize();
 
-    public int getIdleMin();
-
     public void setPoolSize(int n);
+
+    public int getIdleMin();
 
     public void setIdleMin(int n);
 

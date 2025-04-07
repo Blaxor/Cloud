@@ -4,7 +4,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import ro.deiutzblaxo.cloud.data.mysql.MySQLConnection;
 import ro.deiutzblaxo.cloud.data.mysql.MySQLManager;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 public class MySQLManagerNormal implements MySQLManager {
 
@@ -14,6 +16,7 @@ public class MySQLManagerNormal implements MySQLManager {
     public MySQLManagerNormal(@NonNull MySQLConnection connection, int nthreads) {
         this.connection = connection;
         pool = Executors.newFixedThreadPool(nthreads, new MySQLThreadFactory());
+
     }
 
     public MySQLConnection getConnection() {

@@ -1,7 +1,5 @@
 package ro.deiutzblaxo.cloud.data.mysql.classic;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.pool.HikariPool;
 import ro.deiutzblaxo.cloud.data.mysql.MySQLConnection;
 import ro.deiutzblaxo.cloud.utils.CloudLogger;
 
@@ -32,6 +30,12 @@ public class MySQLConnectionNormal implements MySQLConnection {
         this.params = params;
         connect(host, port, database, username, password, params);
 
+    }
+
+
+    @Override
+    public void connect(String host, int port, String database, String username, String password, String params, String prefixPoolName) {
+        this.connect(host, port, database, username, password, params);
     }
 
     public void connect(String host, int port, String database, String username, String password, String params) {
@@ -73,6 +77,7 @@ public class MySQLConnectionNormal implements MySQLConnection {
         }
     }
 
+
     public Connection getConnection() {
         return connection;
     }
@@ -83,13 +88,13 @@ public class MySQLConnectionNormal implements MySQLConnection {
     }
 
     @Override
-    public int getIdleMin() {
-        return 0;
+    public void setPoolSize(int n) {
+
     }
 
     @Override
-    public void setPoolSize(int n) {
-
+    public int getIdleMin() {
+        return 0;
     }
 
     @Override
