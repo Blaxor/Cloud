@@ -11,4 +11,6 @@ public interface CacheManager<K, V> {
     void resetCache();
 
     void evictPeriodically();
+
+    int size();
 }

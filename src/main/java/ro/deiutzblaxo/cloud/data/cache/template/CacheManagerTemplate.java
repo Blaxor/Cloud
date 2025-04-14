@@ -63,4 +63,9 @@ public abstract class CacheManagerTemplate<V> implements CacheManager<String, V>
         }
 
     }
+
+    @Override
+    public int size() {
+        return cache.size();
+    }
 }
