@@ -13,13 +13,10 @@ public abstract class CacheManagerTemplate<V> implements CacheManager<String, V>
 
     private final static Logger logger = LogManager.getLogger(CacheManagerTemplate.class);
     private final int cacheRetentionSeconds;
-    ConcurrentHashMap<String, Value<V>> cache = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Value<V>> cache = new ConcurrentHashMap<>();
 
     public CacheManagerTemplate(int cacheRetentionSeconds) {
-
         this.cacheRetentionSeconds = cacheRetentionSeconds;
-
-
     }
 
     @Override
