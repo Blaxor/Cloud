@@ -35,7 +35,7 @@ public class RetryExecutor {
                 }
 
                 log.info("Attempt {} to execute operation failed... waiting {} ms before retry", attempt, DELAY_BETWEEN_RETRIES_MILLIS);
-                log.debug("Exception details: ", e);
+                log.warn("Exception details: ", e);
 
                 // Wait before retrying
                 try {
