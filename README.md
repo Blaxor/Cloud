@@ -58,7 +58,7 @@ Cloud provides battle-tested, production-ready components for database connectiv
 <dependency>
     <groupId>ro.deiutzblaxo</groupId>
     <artifactId>Cloud</artifactId>
-    <version>1.3.2.5</version>
+    <version>1.3.2.6</version>
 </dependency>
 ```
 
@@ -400,21 +400,6 @@ Contributions are welcome! This library grows based on real-world use cases.
 2. Add tests for new features
 3. Update documentation
 4. One feature per pull request
-
----
-
-## 📝 Version History
-
-### 1.3.2.5 (Current)
-- Comprehensive utility library for Java applications
-- Database: MySQL (classic + HikariCP), Redis
-- Networking: NIO-based client/server
-- Caching: TTL-based in-memory cache
-- Threading: Retry executor, callbacks
-- File ops: Batch reading, ZIP, YAML
-- Utilities: Reflection, sorting, Name-UUID management
-
----
 
 ## 📄 License
 
