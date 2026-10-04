@@ -10,6 +10,7 @@ import ro.deiutzblaxo.cloud.nus.NameUUIDStorage;
 import ro.deiutzblaxo.cloud.nus.NusType;
 import ro.deiutzblaxo.cloud.nus.PriorityNUS;
 
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -95,7 +96,7 @@ public class NameUUIDStorageMySQL implements NameUUIDStorage {
         return table;
     }
 
-    public void add(String name, UUID uuid) throws TooManyArgs {
+    public void add(String name, UUID uuid) throws SQLException {
         if (!mySQLManager.exists(table, "UUID", uuid.toString())) {
             mySQLManager.insert(table, new String[]{"UUID", "NAME"}, new Object[]{uuid.toString(), name});
         }

@@ -3,47 +3,58 @@ package ro.deiutzblaxo.cloud.nus;
 import ro.deiutzblaxo.cloud.expcetions.NoFoundException;
 import ro.deiutzblaxo.cloud.datastructure.OrderType;
 import ro.deiutzblaxo.cloud.datastructure.QuickSortReflectByMethodReturn;
-import ro.deiutzblaxo.cloud.expcetions.TooManyArgs;
+import ro.deiutzblaxo.cloud.utils.CloudLogger;
 import ro.deiutzblaxo.cloud.utils.objects.Pair;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class NameUUIDManager {
-
+public class NameUUIDManager implements Closeable {
 
     private ArrayList<NameUUIDStorage> storages = new ArrayList<>();
-    private ConcurrentLinkedQueue<Pair<UUID, String>> q = new ConcurrentLinkedQueue<>();
+    private LinkedBlockingQueue<Pair<UUID, String>> queue = new LinkedBlockingQueue<>();
+    private boolean running = false;
+    private final Thread thread =  new Thread(() -> {
+        while (running) {
+            try {
+                    Pair<UUID, String> value = queue.take();
+                    storages.forEach(nameUUIDStorage -> {
+                        try {
+                            nameUUIDStorage.add(value.getLast(), value.getFirst());
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
 
+            }catch (InterruptedException ignore) {
+                //IGNORED
+            }catch (RuntimeException e) {
+                CloudLogger.getLogger().severe("Exception catch in queue for adding to the NameUUIDStorage, clearing the queue...");
+                CloudLogger.getLogger().severe(e.getMessage());
+                queue.clear();
+            }
+        }
+
+    });
 
     public NameUUIDManager(NameUUIDStorage... storage) {
-        for (int i = 0; i < storage.length; i++) {
-            storages.add(storage[i]);
-        }
+        storages.addAll(Arrays.asList(storage));
         try {
             QuickSortReflectByMethodReturn.sort(storages, 0, storages.size() - 1, "getPriority", OrderType.DESCENDING);
         } catch (NoSuchFieldException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
 
-        new Thread(() -> {
-            while (true) {
-                if (!q.isEmpty()) {
-                    Pair<UUID, String> value = q.remove();
-                    storages.forEach(nameUUIDStorage -> {
-                        try {
-                            nameUUIDStorage.add(value.getLast(), value.getFirst());
-                        } catch (TooManyArgs e) {
-                            e.printStackTrace();
-                        }
-                    });
-                }
-            }
-
-        }).start();
-
+    public void start() {
+        running = true;
+        thread.start();
     }
 
     public String getNameByUUID(UUID uuid) throws NoFoundException {
@@ -95,8 +106,17 @@ public class NameUUIDManager {
     }
 
     public void add(String name, UUID uuid) {
-        q.add(new Pair<>(uuid, name));
+        queue.add(new Pair<>(uuid, name));
     }
 
 
+    @Override
+    public void close() throws IOException {
+        if(!running){
+            CloudLogger.getLogger().warning("NameUUIDManager was not running, nothing to be closed.");
+            return;
+        }
+        running = false;
+        thread.interrupt();
+    }
 }

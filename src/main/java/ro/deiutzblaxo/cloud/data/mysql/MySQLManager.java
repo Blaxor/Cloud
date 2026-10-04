@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 
 public interface MySQLManager {
 
-    default <T> void insert(@NonNull String table, @NonNull String[] columns, @NonNull T[] values) throws TooManyArgs {
+    default <T> void insert(@NonNull String table, @NonNull String[] columns, @NonNull T[] values) throws SQLException {
 
         if (columns.length != values.length)
             throw new TooManyArgs("Too many/less arguments!");
@@ -33,7 +33,7 @@ public interface MySQLManager {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw e;
         }
 
 

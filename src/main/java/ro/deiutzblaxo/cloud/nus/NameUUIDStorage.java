@@ -3,6 +3,7 @@ package ro.deiutzblaxo.cloud.nus;
 
 import ro.deiutzblaxo.cloud.expcetions.TooManyArgs;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 public interface NameUUIDStorage {
@@ -16,5 +17,5 @@ public interface NameUUIDStorage {
 
     PriorityNUS getPriority();
 
-    void add(String name, UUID uuid) throws TooManyArgs;
+    void add(String name, UUID uuid) throws TooManyArgs, SQLException;
 }

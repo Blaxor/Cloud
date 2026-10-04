@@ -25,6 +25,7 @@ public class ConnectionGateway extends Thread {
     private static final Logger logger = LogManager.getLogger(ConnectionGateway.class);
     private final ConcurrentHashMap<Integer, CallBack<PacketData>> callBackConcurrentHashMap = new ConcurrentHashMap<>();
     private final SocketChannel socketChannel;
+    private boolean running;
 
     /**
      * Constructs a {@link ConnectionGateway} with the given socket channel.
@@ -33,6 +34,7 @@ public class ConnectionGateway extends Thread {
      */
     public ConnectionGateway(SocketChannel socketChannel) {
         this.socketChannel = socketChannel;
+        running = false;
     }
 
 
@@ -44,7 +46,8 @@ public class ConnectionGateway extends Thread {
     @Override
     public void run() {
         logger.info("Started the connection.");
-        while (true) {
+        running = true;
+        while (running) {
             PacketData received;
             try {
                 received = PacketData.readPacketData(socketChannel);
@@ -101,7 +104,9 @@ public class ConnectionGateway extends Thread {
      */
     public void close() {
         try {
+            running = false;
             socketChannel.close();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
